@@ -14,15 +14,34 @@ export default class App extends Component {
     }
   }
 
+
+
+  getData(url) {
+    const data = `https://swapi.co/api/${url}/`;
+
+    fetch(data)
+    .then(response => response.json())
+    .then(response =>{
+      console.log(response)
+    })
+  }
+
+
+
+
+
   render() {
     return (
       <div>
         < Header />
         < Nav />
         < Container />
+        { this.getData()}
       </div>
     );
   }
 }
+
+
 
 // export default App;
