@@ -1,12 +1,12 @@
 import React from 'react'
+import './Header.css';
 
 const Header = () => {
 
 
   return(
     <div>
-
-    <h1>"STAR WARS!!!!"</h1>
+    <h1 className='header'>SWAPIBox</h1>
     </div>
   )
 }

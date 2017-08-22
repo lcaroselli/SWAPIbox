@@ -5,7 +5,6 @@ import Nav from "./Components/Nav/Nav.js"
 import Container from "./Components/Container/Container.js"
 
 
-
 export default class App extends Component {
   constructor() {
     super()
@@ -15,19 +14,15 @@ export default class App extends Component {
   }
 
 
-
   getData(url) {
     const data = `https://swapi.co/api/${url}/`;
-
     fetch(data)
     .then(response => response.json())
     .then(response =>{
       console.log(response)
     })
+    .catch(console.log('Error'));
   }
-
-
-
 
 
   render() {
@@ -41,7 +36,3 @@ export default class App extends Component {
     );
   }
 }
-
-
-
-// export default App;

@@ -1,0 +1,14 @@
+.container {
+  background: #272b30;
+  display: grid;
+  grid-template-columns: 200px 200px 200px 200px;
+  grid-column-gap: 20px;
+  grid-row-gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto;
+  overflow: scroll;
+  padding-top: 50px;
+  height: 600px;
+  width: 80%;
+}
