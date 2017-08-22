@@ -9,40 +9,59 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-
+      people:   null,
+      openingText: [],
     }
   }
 
-  componentDidMount(url) {
-    fetch(`https://swapi.co/api/${url}/`)
+  componentDidMount(films) {
+
+    this.fetchMovieOpening()
+
+
+}
+
+  fetchMovieOpening() {
+    const movieOpeningArray =
+    fetch(`https://swapi.co/api/films/`)
     .then(data => data.json())
-    .then(data => console.log(data.results))
-    .then(data => this.fetchSubData(data.results))
-    .catch(error => console.log('ERROR'))
-  }
+    .then(data => (data.results).map((film)=>{
+      return {
+        title: film.title,
+        releaseDate: film.release_date,
+        opening: film.opening_crawl
+      }
+      }))
+    .then(data => {this.setState({
+      openingText: data
+    })})
+
+    }
 
 
-  fetchSubData(data) {
-    const personHomeworldData = data.map(person => {
-      return fetch(person.homeworld)
-        .then(resolved => resolved.json())
-    })
 
-    const personSpeciesData = data.map(person => {
-      return fetch(person.species)
-        .then(resolved => resolved.json())
-    })
 
-    // console.log(personHomeworldData)
-  }
+  // fetchSubData(data) {
+  //   const personHomeworldData = data.map(person => {
+  //     return fetch(person.homeworld)
+  //       .then(resolved => resolved.json())
+  //       .then(worlds => console.log('worlds: ', worlds))
+  //   })
+  //
+  //   const personSpeciesData = data.map(person => {
+  //     return fetch(person.species)
+  //       .then(resolved => resolved.json())
+  //   })
+  // //
+  //   console.log(personHomeworldData)
+  // }
 
   render() {
     return (
       <div>
-        < Header />
+        < Header openingText = { this.fetchMovieOpening }/>
         < Nav />
         < Container />
-        { this.componentDidMount('people') }
       </div>
     );
   }

@@ -1,12 +1,12 @@
 import React from 'react'
 import './Header.css';
 
-const Header = () => {
+const Header = ({ openingText }) => {
 
 
   return(
     <div>
-    <h1 className='header'>SWAPIBox</h1>
+    <h1 className='header'>{ openingText }</h1>
     </div>
   )
 }
