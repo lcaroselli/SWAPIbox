@@ -13,17 +13,28 @@ export default class App extends Component {
     }
   }
 
-
-  getData(url) {
-    const data = `https://swapi.co/api/${url}/`;
-    fetch(data)
-    .then(response => response.json())
-    .then(response =>{
-      console.log(response)
-    })
-    .catch(console.log('Error'));
+  componentDidMount(url) {
+    fetch(`https://swapi.co/api/${url}/`)
+    .then(data => data.json())
+    .then(data => console.log(data.results))
+    .then(data => this.fetchSubData(data.results))
+    .catch(error => console.log('ERROR'))
   }
 
+
+  fetchSubData(data) {
+    const personHomeworldData = data.map(person => {
+      return fetch(person.homeworld)
+        .then(resolved => resolved.json())
+    })
+
+    const personSpeciesData = data.map(person => {
+      return fetch(person.species)
+        .then(resolved => resolved.json())
+    })
+
+    // console.log(personHomeworldData)
+  }
 
   render() {
     return (
@@ -31,7 +42,7 @@ export default class App extends Component {
         < Header />
         < Nav />
         < Container />
-        { this.getData()}
+        { this.componentDidMount('people') }
       </div>
     );
   }
