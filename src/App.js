@@ -83,7 +83,7 @@ export default class App extends Component {
   render() {
     return (
       <div>
-        < Header openingText = { this.fetchMovieOpening }/>
+        < Header openText =  { this.state.openingText }/>
         < Nav />
         < Container />
       </div>

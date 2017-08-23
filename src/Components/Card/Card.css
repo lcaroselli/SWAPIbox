@@ -8,3 +8,20 @@
   height: 250px;
   justify-content: center;
 }
+
+.favorite-btn {
+  background: #3a3f55;
+  border: none;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.favorite-btn:hover {
+  cursor: pointer;
+  opacity: 1.0;
+}
+
+.favorite-btn img {
+  height: 25px;
+  width: 25px;
+}
