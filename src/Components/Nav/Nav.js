@@ -1,15 +1,15 @@
 import React from 'react';
 import './Nav.css';
 
-const Nav= () => {
+const Nav= ({ getCategoryData }) => {
 
   return(
     <div>
       <nav>
-        <button>People</button>
-        <button>Vehicles</button>
-        <button>Planets</button>
-        <button>Favorites</button>
+        <button onClick={ () => getCategoryData('people') }>People</button>
+        <button onClick={ () => getCategoryData('planets') }>Planets</button>
+        <button onClick={ () => getCategoryData('vehicles') }>Vehicles</button>
+        <button onClick={ () => getCategoryData('category') }>Favorites</button>
       </nav>
     </div>
   )

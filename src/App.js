@@ -9,14 +9,16 @@ export default class App extends Component {
   constructor() {
     super()
     this.state = {
-      people: null,
-      vehicles: null,
+      dataArray: [],
       openingText: [],
+      people: null,
       planets: null,
+      vehicles: null
     }
+    this.getCategoryData = this.getCategoryData.bind(this)
   }
 
-  componentDidMount(films) {
+  componentDidMount() {
     this.fetchMovieOpening()
     this.fetchPeopleData()
     this.fetchVehicleData()
@@ -41,10 +43,10 @@ export default class App extends Component {
     })
   }
 
-  fetchPeopleData() {
+  fetchPeopleData(string) {
     fetch(`https://swapi.co/api/people/`)
       .then(data => data.json())
-      .then(data => this.fetchSpecificPeopleData(data.results))
+      .then(data => this.fetchHomeworldData(data.results))
       .then(newPeople =>
         this.setState({
           people: newPeople
@@ -52,7 +54,7 @@ export default class App extends Component {
       )
   }
 
-  fetchSpecificPeopleData(data) {
+  fetchHomeworldData(data) {
     const unresolvedPromises = data.map(person => {
       return fetch(person.homeworld)
       .then(response => response.json())
@@ -64,11 +66,10 @@ export default class App extends Component {
     })
   }
 
-  fetchPlanetsData() {
-    fetch('https://swapi.co/api/planets/')
+  fetchPlanetsData(string) {
+    fetch(`https://swapi.co/api/planets/`)
     .then(data => data.json())
     .then(data => (data.results).map((planet)=>{
-      console.log('planetBefore: ', planet)
       return {
         planetName: planet.name,
         terrain: planet.terrain,
@@ -78,7 +79,6 @@ export default class App extends Component {
       }
     }))
     .then(newPlanet =>
-
       this.setState({
         planets: newPlanet
       })
@@ -95,13 +95,11 @@ export default class App extends Component {
       .then(resident => {
         // return resident
         newResidents.push(...resident)
-        console.log('newResidents: ', newResidents)
       })
-    console.log('newres: ',newResidents)
     return newResidents
   }
 
-  fetchVehicleData() {
+  fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
       .then(data => data.json())
       .then(data => (data.results).map((vehicle)=>{
@@ -119,12 +117,38 @@ export default class App extends Component {
       })
   }
 
+  getCategoryData(category) {
+    fetch(`https://swapi.co/api/${category}/`)
+     .then(response => response.json())
+     .then(response => {
+       if (category === 'people') {
+         return this.state.people
+       } else if (category === 'planets') {
+         return this.state.planets
+       } else {
+         return this.state.vehicles
+       }
+     })
+     .then(response =>  this.setState({
+                          dataArray: response
+                        }))
+     .catch(error => alert('Error...'))
+  }
+
   render() {
+    const renderCards = () => {
+     if (this.state.dataArray.length > 0) {
+       return <Container categoryData = { this.state.dataArray } />
+     } else {
+       return <h2>'Please Select a Category'</h2>
+     }
+   }
+
     return (
       <div>
-        < Header openText =  { this.state.openingText }/>
-        < Nav />
-        < Container />
+        < Header openText =  { this.state.openingText } />
+        < Nav getCategoryData = { this.getCategoryData } />
+        { renderCards() }
       </div>
     );
   }
