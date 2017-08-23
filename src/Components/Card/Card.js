@@ -2,15 +2,18 @@ import React from 'react';
 import './Card.css';
 import Star from '../../../assets/favorites-star.svg'
 
-const Card = () => {
+const Card = ( { subject } ) => {
+  const cardKeys = Object.keys(subject)
+
+  const cardArray = cardKeys.map((key, i) => {
+    return ( <h5 cardKey = { i }> { key }: { subject[key] } </h5> )
+  })
+
   return(
     <div>
       <section className='card'>
         <button className='favorite-btn'><img src={ Star }/></button>
-        <p className='name'>Name: </p>
-        <p>Homeworld: </p>
-        <p>Species: </p>
-        <p>Population: </p>
+        { cardArray }
       </section>
     </div>
   )
