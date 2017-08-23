@@ -15,11 +15,9 @@ export default class App extends Component {
   }
 
   componentDidMount(films) {
-
     this.fetchMovieOpening()
-
-
-}
+    this.fetchPeopleData()
+  }
 
   fetchMovieOpening() {
     const movieOpeningArray =
@@ -32,29 +30,37 @@ export default class App extends Component {
         opening: film.opening_crawl
       }
       }))
-    .then(data => {this.setState({
-      openingText: data
-    })})
+    .then(data => {
+      this.setState({
+        openingText: data
+      })
+    })
+  }
 
+    fetchPeopleData() {
+      fetch(`https://swapi.co/api/people/`)
+      .then(data => data.json())
+      .then(data => this.fetchSpecificPeopleData(data.results))
+      .then(newPeople =>
+        this.setState({
+          people: newPeople
+        })
+      )
     }
 
+    fetchSpecificPeopleData(data) {
+      const unresolvedPromises = data.map(person => {
+        return fetch(person.homeworld)
+        .then(response => response.json())
 
+      })
 
-
-  // fetchSubData(data) {
-  //   const personHomeworldData = data.map(person => {
-  //     return fetch(person.homeworld)
-  //       .then(resolved => resolved.json())
-  //       .then(worlds => console.log('worlds: ', worlds))
-  //   })
-  //
-  //   const personSpeciesData = data.map(person => {
-  //     return fetch(person.species)
-  //       .then(resolved => resolved.json())
-  //   })
-  // //
-  //   console.log(personHomeworldData)
-  // }
+      return Promise.all(unresolvedPromises)
+      .then(planet => { return planet.map((world, index, array) => {
+        return Object.assign({planet: world.name, population: world.population}, data[index])
+      })
+    })
+  }
 
   render() {
     return (
