@@ -16,11 +16,12 @@ export default class App extends Component {
     }
   }
 
+
   componentDidMount(films) {
     this.fetchMovieOpening()
-    this.fetchPeopleData()
-    this.fetchVehicleData()
-    this.fetchPlanetsData()
+    // this.fetchPeopleData()
+    // this.fetchVehicleData()
+    // this.fetchPlanetsData()
   }
 
   fetchMovieOpening() {
@@ -38,13 +39,14 @@ export default class App extends Component {
       this.setState({
         openingText: data
       })
+      console.log("movieOpening: ", this.state.openingText)
     })
   }
 
   fetchPeopleData() {
     fetch(`https://swapi.co/api/people/`)
       .then(data => data.json())
-      .then(data => this.fetchSpecificPeopleData(data.results))
+      .then(data => this.fetchHomeworldData(data.results))
       .then(newPeople =>
         this.setState({
           people: newPeople
@@ -52,7 +54,7 @@ export default class App extends Component {
       )
   }
 
-  fetchSpecificPeopleData(data) {
+  fetchHomeworldData(data) {
     const unresolvedPromises = data.map(person => {
       return fetch(person.homeworld)
       .then(response => response.json())
