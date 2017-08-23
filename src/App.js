@@ -11,7 +11,8 @@ export default class App extends Component {
     this.state = {
       people: null,
       vehicles: null,
-      openingText: []
+      openingText: [],
+      planets: null,
     }
   }
 
@@ -19,6 +20,7 @@ export default class App extends Component {
     this.fetchMovieOpening()
     this.fetchPeopleData()
     this.fetchVehicleData()
+    this.fetchPlanetsData()
   }
 
   fetchMovieOpening() {
@@ -29,7 +31,7 @@ export default class App extends Component {
       return {
         title: film.title,
         releaseDate: film.release_date,
-        opening: film.opening_crawl
+        opening: film.opening_crawl,
       }
       }))
     .then(data => {
@@ -60,6 +62,43 @@ export default class App extends Component {
         return Object.assign({planet: world.name, population: world.population}, data[index])
       })
     })
+  }
+
+  fetchPlanetsData() {
+    fetch('https://swapi.co/api/planets/')
+    .then(data => data.json())
+    .then(data => (data.results).map((planet)=>{
+      console.log('planetBefore: ', planet)
+      return {
+        planetName: planet.name,
+        terrain: planet.terrain,
+        population: planet.population,
+        climate: planet.climate,
+        residents: this.fetchResidents(planet.residents)
+      }
+    }))
+    .then(newPlanet =>
+
+      this.setState({
+        planets: newPlanet
+      })
+    )
+  }
+
+  fetchResidents(residentsArray) {
+    const newResidents = []
+    const unresolvedResidents = residentsArray.map((url)=>{
+      return fetch(`${url}`)
+      .then(data => data.json())
+    })
+      Promise.all(unresolvedResidents)
+      .then(resident => {
+        // return resident
+        newResidents.push(...resident)
+        console.log('newResidents: ', newResidents)
+      })
+    console.log('newres: ',newResidents)
+    return newResidents
   }
 
   fetchVehicleData() {
