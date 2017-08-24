@@ -15,10 +15,10 @@ export default class Card extends Component {
   favoriteCard(e) {
     if (this.state.favorite === false) {
       this.setState({ favorite: true } )
-      this.props.setFavoriteState(this)
     } else {
       this.setState({ favorite: false } )
     }
+    this.props.setFavoriteState(this)
   };
 
   render() {
