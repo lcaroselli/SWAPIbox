@@ -33,27 +33,10 @@ export default class App extends Component {
   }
 
   removeFavoriteState(cardInfo) {
-    console.log('cardInfo: ', cardInfo)
     let favState = [...this.state.favorite];
-    console.log('favState: ', favState)
     let newFavState = favState.filter(obj => obj !== cardInfo)
           this.setState({ favorite: newFavState})
   }
-
-  // addToFaves(fullObj) {
-  //   let faves = [...this.state.favoriteCards]
-  //   if(faves.includes(fullObj)) {
-  //     this.removeFromFaves(fullObj)
-  //   } else {
-  //     faves.push(fullObj)
-  //     this.setState({ favoriteCards: faves })
-  //   }
-  //   }
-  // removeFromFaves(fullObj) {
-  //   let faves = [...this.state.favoriteCards]
-  //   let filteredArray = faves.filter(obj => obj !== fullObj)
-  //   this.setState({ favoriteCards: filteredArray })
-  // }
 
   componentDidMount() {
     this.fetchMovieOpening()
@@ -147,23 +130,6 @@ export default class App extends Component {
       return newResidents
   }
 
-  // fetchSpecies(speciesArray) {
-  //   const newSpecies = []
-  //   const speciesData = speciesArray.map((species) => {
-  //     return fetch(species)
-  //     .then(data => data.json())
-  //   })
-  //
-  //   Promise.all(speciesData)
-  //   .then(species => {
-  //     return species.map((specie) => {
-  //       return newSpecies.push(specie.name)
-  //     })
-  //   })
-  //   return speciesData
-  // }
-
-
   fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
       .then(data => data.json())
@@ -188,8 +154,6 @@ export default class App extends Component {
        dataArray: this.state.favorite,
        displayPage: 'loaded'
      })
-
-    console.log(this.state.favorite)
   }
 
 
@@ -220,8 +184,8 @@ export default class App extends Component {
     return (
       <div>
         <div>
-          < Header openText =  { this.state.openingText } />
-        < Nav getCategoryData = { this.getCategoryData } getFavorites={ this.getFavorites } favCount={ this.state.favorite.length }  />
+          < Header openText={ this.state.openingText } />
+        < Nav getCategoryData={ this.getCategoryData } getFavorites={ this.getFavorites } favCount={ this.state.favorite.length }  />
 
           { this.state.displayPage === 'initial' &&
             <h2 className='select-category'>Please Select a Category</h2>

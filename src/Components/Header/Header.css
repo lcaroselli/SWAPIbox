@@ -1,37 +1,38 @@
 .header {
-  background: #1c1e22;
+  background: url('./space-1164579_1920.png');
+  z-index: 1000;
   color: yellow;
   height: 200px;
   perspective: 400px;
   margin: 0;
   overflow: hidden;
-  padding: 30px;
   text-align: center;
 }
 
 .crawl-text {
-  text-align: center;
-  font-size: 40px;
+  z-index: 1;
+  font-size: 80px;
   padding: 10px;
-  line-height: 200px;
-  min-width: 300px;
+  line-height: 120px;
+  min-width: 1000px;
   text-shadow: 5px 5px #000000;
 }
 
 .movie-title, .movie-release-date {
-  font-size: 14px;
+  font-size: 80px;
 }
 
-.project-title {
-  color: #ffffff;
+.project-title  {
+  color: yellow;;
   font-size: 30px;
   margin: auto;
   text-align: center;
+  background: url('/static/media/space-1164579_1920.888dc6b6.png')
 }
 
 .crawl {
   position: relative;
-  top: 99999px;
+  top: 9999px;
   transform-origin: 50% 100%;
   animation: crawl 70s linear;
 }

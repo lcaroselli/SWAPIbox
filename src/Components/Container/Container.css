@@ -1,14 +1,15 @@
 .container {
   background: #272b30;
   display: flex;
-  display: grid;
-  grid-template-columns: 200px 200px 200px 200px;
-  grid-column-gap: 20px;
-  grid-row-gap: 20px;
+  /*display: grid;*/
+  /*grid-template-columns: 200px 200px 200px 200px;*/
+  /*grid-column-gap: 20px;*/
+  /*grid-row-gap: 20px;*/
   justify-content: center;
+  flex-wrap: wrap;
   margin: auto;
   overflow: scroll;
   padding-top: 50px;
-  height: 600px;
-  width: 80%;
+  min-height: 600px;
+  width: 100%;
 }
