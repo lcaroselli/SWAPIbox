@@ -40,21 +40,6 @@ export default class App extends Component {
           this.setState({ favorite: newFavState})
   }
 
-  // addToFaves(fullObj) {
-  //   let faves = [...this.state.favoriteCards]
-  //   if(faves.includes(fullObj)) {
-  //     this.removeFromFaves(fullObj)
-  //   } else {
-  //     faves.push(fullObj)
-  //     this.setState({ favoriteCards: faves })
-  //   }
-  //   }
-  // removeFromFaves(fullObj) {
-  //   let faves = [...this.state.favoriteCards]
-  //   let filteredArray = faves.filter(obj => obj !== fullObj)
-  //   this.setState({ favoriteCards: filteredArray })
-  // }
-
   componentDidMount() {
     this.fetchMovieOpening()
     this.fetchPeopleData()
@@ -88,7 +73,7 @@ export default class App extends Component {
           Name: person.name,
           Homeworld: person.planet,
           Population: person.population,
-          // Species: this.fetchSpecies(person.species)
+          Species: this.fetchSpecies(person.species)
         })
       }))
       .then(data =>
@@ -147,21 +132,23 @@ export default class App extends Component {
       return newResidents
   }
 
-  // fetchSpecies(speciesArray) {
-  //   const newSpecies = []
-  //   const speciesData = speciesArray.map((species) => {
-  //     return fetch(species)
-  //     .then(data => data.json())
-  //   })
-  //
-  //   Promise.all(speciesData)
-  //   .then(species => {
-  //     return species.map((specie) => {
-  //       return newSpecies.push(specie.name)
-  //     })
-  //   })
-  //   return speciesData
-  // }
+  fetchSpecies(speciesArray) {
+    const newSpecies = []
+    const speciesData = speciesArray.map((species) => {
+      return fetch(species)
+      .then(data => data.json())
+    })
+
+    Promise.all(speciesData)
+    .then(species => {
+      return species.map((specie) => {
+        // console.log(specie)
+        return newSpecies.push(specie.name)
+      })
+    })
+    .then(data => console.log(newSpecies))
+    return newSpecies
+  }
 
 
   fetchVehicleData(string) {
@@ -183,16 +170,11 @@ export default class App extends Component {
   }
 
   getFavorites() {
-
     this.setState({
        dataArray: this.state.favorite,
        displayPage: 'loaded'
      })
-
-    console.log(this.state.favorite)
   }
-
-
 
   getCategoryData(category) {
     fetch(`https://swapi.co/api/${category}/`)
