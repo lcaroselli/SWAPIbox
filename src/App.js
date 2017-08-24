@@ -71,7 +71,7 @@ export default class App extends Component {
           Name: person.name,
           Homeworld: person.planet,
           Population: person.population,
-          // Species: this.fetchSpecies(person.species)
+          Species: this.fetchSpecies(person.species)
         })
       }))
       .then(data =>
@@ -130,6 +130,24 @@ export default class App extends Component {
       return newResidents
   }
 
+  fetchSpecies(speciesArray) {
+    const newSpecies = []
+    const speciesData = speciesArray.map((species) => {
+      return fetch(species)
+      .then(data => data.json())
+    })
+
+    Promise.all(speciesData)
+    .then(species => {
+      return species.map((specie) => {
+        // console.log(specie)
+        return newSpecies.push(specie.name)
+      })
+    })
+    .then(data => console.log(newSpecies))
+    return newSpecies
+  }
+
   fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
       .then(data => data.json())
@@ -149,14 +167,11 @@ export default class App extends Component {
   }
 
   getFavorites() {
-
     this.setState({
        dataArray: this.state.favorite,
        displayPage: 'loaded'
      })
   }
-
-
 
   getCategoryData(category) {
     fetch(`https://swapi.co/api/${category}/`)
