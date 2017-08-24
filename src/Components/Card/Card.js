@@ -1,31 +1,51 @@
-import React from 'react';
+import React, {Component} from 'react';
 import './Card.css';
 import Star from '../../../assets/favorites-star.svg';
 import PropTypes from 'prop-types';
 
-const Card = ( { subject } ) => {
-  let cardKeys = Object.keys(subject)
+export default class Card extends Component {
+  constructor() {
+    super();
+      this.favoriteCard = this.favoriteCard.bind(this)
+      this.state = {
+        favorite: false,
+      }
+  }
 
-  let cardArray = cardKeys.map((key, i) => {
-    return (
+  favoriteCard(e) {
+    if (this.state.favorite === false) {
+      this.setState({ favorite: true } )
+      this.props.setFavoriteState(this)
+    } else {
+      this.setState({ favorite: false } )
+    }
+  };
+
+  render() {
+    const { subject } = this.props
+    let cardKeys = Object.keys(subject)
+
+    let cardArray = cardKeys.map((key, i) => {
+      return (
+        <div>
+          <p className='category-data'> { key }: { subject[key] } </p>
+        </div>
+      )
+    })
+
+
+    return(
       <div>
-        <p className='category-data'> { key }: { subject[key] } </p>
+        <section className='card'>
+          <button className='favorite-btn' onClick={ this.favoriteCard.bind(this) }><img src={ Star } alt='star icon to favorite a card'/></button>
+          { cardArray }
+        </section>
       </div>
     )
-  })
+  }
 
-  return(
-    <div>
-      <section className='card'>
-        <button className='favorite-btn'><img src={ Star } alt='star icon to favorite a card'/></button>
-        { cardArray }
-      </section>
-    </div>
-  )
 }
 
 Card.propTypes = {
    subject: PropTypes.object.isRequired
  }
-
-export default Card
