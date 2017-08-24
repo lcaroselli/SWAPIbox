@@ -140,11 +140,9 @@ export default class App extends Component {
     Promise.all(speciesData)
     .then(species => {
       return species.map((specie) => {
-        // console.log(specie)
         return newSpecies.push(specie.name)
       })
     })
-    .then(data => console.log(newSpecies))
     return newSpecies
   }
 
