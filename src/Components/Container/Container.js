@@ -3,13 +3,14 @@ import Card from "../Card/Card.js";
 import './Container.css';
 import PropTypes from 'prop-types';
 
-const Container = ({ categoryData }) => {
+const Container = ({ categoryData, setFavoriteState }) => {
 
   const newCards = () => {
     if (categoryData.length > 0) {
       return categoryData.map(object => {
         return <Card
-                subject = { object }
+                subject={ object }
+                setFavoriteState={ setFavoriteState }
                 />
       })
     }

@@ -14,9 +14,16 @@ export default class App extends Component {
       displayPage: 'initial',
       people: null,
       planets: null,
-      vehicles: null
+      vehicles: null,
+      favorite: []
     }
     this.getCategoryData = this.getCategoryData.bind(this)
+  }
+
+  setFavoriteState(card) {
+    let favState=this.state.favorite;
+    favState.push(card)
+    this.setState({ favorite: favState})
   }
 
   componentDidMount() {
@@ -149,6 +156,7 @@ export default class App extends Component {
   }
 
   render() {
+
     return (
       <div>
         <div>
@@ -160,7 +168,7 @@ export default class App extends Component {
           }
 
           { this.state.displayPage === 'loaded' &&
-            <Container categoryData={ this.state.dataArray } />
+            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } />
           }
 
           { this.state.displayPage === 'loading' &&
