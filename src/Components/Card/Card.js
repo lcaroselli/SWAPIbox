@@ -3,13 +3,13 @@ import './Card.css';
 import Star from '../../../assets/favorites-star.svg'
 
 const Card = ( { subject } ) => {
-  const cardKeys = Object.keys(subject)
+  let cardKeys = Object.keys(subject)
 
-  const cardArray = cardKeys.map((key, i) => {
+  let cardArray = cardKeys.map((key, i) => {
     console.log(key)
     return (
       <div>
-        <p className='category-data'> { subject[key] } </p>
+        <p className='category-data'> { key }: { subject[key] } </p>
       </div>
     )
   })

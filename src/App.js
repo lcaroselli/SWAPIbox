@@ -50,9 +50,10 @@ export default class App extends Component {
       .then(data => this.fetchHomeworldData(data.results))
       .then(data => data.map(person =>{
           return {
-          personName: person.name,
-          personHomeworld: person.planet,
-          homeworlPopulation: person.population
+          Name: person.name,
+          Homeworld: person.planet,
+          Population: person.population,
+          Species: 'Unknown'
         }
       }))
       .then(newPeople =>
@@ -80,11 +81,12 @@ export default class App extends Component {
     .then(data => data.json())
     .then(data => (data.results).map((planet)=>{
       return {
-        planetName: planet.name,
-        terrain: planet.terrain,
-        population: planet.population,
-        climate: planet.climate,
-        residents: this.fetchResidents(planet.residents)
+        Name: planet.name,
+        Terrain: planet.terrain,
+        Population: planet.population,
+        Climate: planet.climate,
+        Residents: 'Unknown'
+        // Residents: this.fetchResidents(planet.residents)
       }
     }))
     .then(newPlanet =>
@@ -94,29 +96,29 @@ export default class App extends Component {
     )
   }
 
-  fetchResidents(residentsArray) {
-    const newResidents = []
-    const unresolvedResidents = residentsArray.map((url)=>{
-      return fetch(`${url}`)
-      .then(data => data.json())
-    })
-      Promise.all(unresolvedResidents)
-      .then(resident => {
-        // return resident
-        newResidents.push(...resident)
-      })
-    return newResidents
-  }
+  // fetchResidents(residentsArray) {
+  //   const newResidents = []
+  //   const unresolvedResidents = residentsArray.map((url)=>{
+  //     return fetch(`${url}`)
+  //     .then(data => data.json())
+  //   })
+  //     Promise.all(unresolvedResidents)
+  //     .then(resident => {
+  //       // return resident
+  //       newResidents.push(...resident)
+  //     })
+  //   return newResidents
+  // }
 
   fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
       .then(data => data.json())
       .then(data => (data.results).map((vehicle)=>{
         return {
-          vehicleName: vehicle.name,
-          model: vehicle.model,
-          vehicleClass: vehicle.vehicle_class,
-          passengers: vehicle.passengers
+          Name: vehicle.name,
+          Model: vehicle.model,
+          Class: vehicle.vehicle_class,
+          Passengers: vehicle.passengers
         }
         }))
       .then(data => {
