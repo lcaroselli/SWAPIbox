@@ -33,9 +33,7 @@ export default class App extends Component {
   }
 
   removeFavoriteState(cardInfo) {
-    console.log('cardInfo: ', cardInfo)
     let favState = [...this.state.favorite];
-    console.log('favState: ', favState)
     let newFavState = favState.filter(obj => obj !== cardInfo)
           this.setState({ favorite: newFavState})
   }
@@ -150,7 +148,6 @@ export default class App extends Component {
     return newSpecies
   }
 
-
   fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
       .then(data => data.json())
@@ -202,8 +199,8 @@ export default class App extends Component {
     return (
       <div>
         <div>
-          < Header openText =  { this.state.openingText } />
-        < Nav getCategoryData = { this.getCategoryData } getFavorites={ this.getFavorites } favCount={ this.state.favorite.length }  />
+          < Header openText={ this.state.openingText } />
+        < Nav getCategoryData={ this.getCategoryData } getFavorites={ this.getFavorites } favCount={ this.state.favorite.length }  />
 
           { this.state.displayPage === 'initial' &&
             <h2 className='select-category'>Please Select a Category</h2>

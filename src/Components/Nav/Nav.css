@@ -5,7 +5,7 @@ nav {
   color: #ffffff;
   display: flex;
   justify-content: center;
-  padding: 15px;
+  height: 60px;
 }
 
 nav button {
@@ -17,7 +17,6 @@ nav button {
 }
 
 nav button:hover {
-  background: #ffffff;
-  color: #32383e;
+  background: #A60000;
   cursor: pointer;
 }
