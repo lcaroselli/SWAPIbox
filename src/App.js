@@ -11,6 +11,7 @@ export default class App extends Component {
     this.state = {
       dataArray: [],
       openingText: [],
+      display: 'Loading Data...',
       people: null,
       planets: null,
       vehicles: null
@@ -47,12 +48,19 @@ export default class App extends Component {
     fetch(`https://swapi.co/api/people/`)
       .then(data => data.json())
       .then(data => this.fetchHomeworldData(data.results))
+      .then(data => data.map(person =>{
+          return {
+          personName: person.name,
+          personHomeworld: person.planet,
+          homeworlPopulation: person.population
+        }
+      }))
       .then(newPeople =>
         this.setState({
           people: newPeople
         })
       )
-  }
+    }
 
   fetchHomeworldData(data) {
     const unresolvedPromises = data.map(person => {
@@ -60,9 +68,10 @@ export default class App extends Component {
       .then(response => response.json())
     })
     return Promise.all(unresolvedPromises)
-      .then(planet => { return planet.map((world, index, array) => {
-        return Object.assign({planet: world.name, population: world.population}, data[index])
-      })
+      .then(planet => {
+        return planet.map((world, index, array) => {
+          return Object.assign({ planet: world.name, population: world.population}, data[index])
+        })
     })
   }
 
@@ -125,14 +134,14 @@ export default class App extends Component {
          return this.state.people
        } else if (category === 'planets') {
          return this.state.planets
-       } else {
+       } else if (category === 'vehicles'){
          return this.state.vehicles
        }
      })
      .then(response =>  this.setState({
                           dataArray: response
                         }))
-     .catch(error => alert('Error...'))
+    //  .catch(error => alert('Error' + error))
   }
 
   render() {

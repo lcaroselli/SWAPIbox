@@ -6,7 +6,12 @@ const Card = ( { subject } ) => {
   const cardKeys = Object.keys(subject)
 
   const cardArray = cardKeys.map((key, i) => {
-    return ( <h5 cardKey = { i }> { key }: { subject[key] } </h5> )
+    console.log(key)
+    return (
+      <div>
+        <p className='category-data'> { subject[key] } </p>
+      </div>
+    )
   })
 
   return(
