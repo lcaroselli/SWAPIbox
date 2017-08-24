@@ -14,9 +14,16 @@ export default class App extends Component {
       display: 'Loading Data...',
       people: null,
       planets: null,
-      vehicles: null
+      vehicles: null,
+      favorite: []
     }
     this.getCategoryData = this.getCategoryData.bind(this)
+  }
+
+  setFavoriteState(card) {
+    let favState=this.state.favorite;
+    favState.push(card)
+    this.setState({ favorite: favState})
   }
 
   componentDidMount() {
@@ -148,7 +155,7 @@ export default class App extends Component {
   render() {
     const renderCards = () => {
      if (this.state.dataArray.length > 0) {
-       return <Container categoryData = { this.state.dataArray } />
+       return <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } />
      } else {
        return <h2 className='select-category'>Please Select a Category</h2>
      }
@@ -156,8 +163,8 @@ export default class App extends Component {
 
     return (
       <div>
-        < Header openText =  { this.state.openingText } />
-        < Nav getCategoryData = { this.getCategoryData } />
+        < Header openText={ this.state.openingText } />
+        < Nav getCategoryData={ this.getCategoryData } />
         { renderCards() }
       </div>
     );
