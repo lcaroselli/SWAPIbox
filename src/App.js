@@ -39,11 +39,11 @@ export default class App extends Component {
     fetch(`https://swapi.co/api/films/`)
     .then(data => data.json())
     .then(data => (data.results).map((film)=>{
-      return {
-        title: film.title,
-        releaseDate: film.release_date,
-        opening: film.opening_crawl,
-      }
+      return Object.assign({}, {
+        Title: film.title,
+        ReleaseDate: film.release_date,
+        Opening: film.opening_crawl,
+      })
       }))
     .then(data => {
       this.setState({
@@ -57,16 +57,16 @@ export default class App extends Component {
       .then(data => data.json())
       .then(data => this.fetchHomeworldData(data.results))
       .then(data => data.map(person =>{
-          return {
+        return Object.assign({}, {
           Name: person.name,
           Homeworld: person.planet,
           Population: person.population,
           Species: 'Unknown'
-        }
+        })
       }))
-      .then(newPeople =>
+      .then(data =>
         this.setState({
-          people: newPeople
+          people: data
         })
       )
     }
@@ -79,7 +79,9 @@ export default class App extends Component {
     return Promise.all(unresolvedPromises)
       .then(planet => {
         return planet.map((world, index, array) => {
-          return Object.assign({ planet: world.name, population: world.population}, data[index])
+          return Object.assign({
+            planet: world.name,
+            population: world.population }, data[index])
         })
     })
   }
@@ -88,17 +90,17 @@ export default class App extends Component {
     fetch(`https://swapi.co/api/planets/`)
     .then(data => data.json())
     .then(data => (data.results).map((planet)=>{
-      return {
+      return Object.assign({}, {
         Name: planet.name,
         Terrain: planet.terrain,
         Population: planet.population,
         Climate: planet.climate,
         Residents: this.fetchResidents(planet.residents)
-      }
+      })
     }))
-    .then(newPlanet =>
+    .then(data =>
       this.setState({
-        planets: newPlanet
+        planets: data
       })
     )
   }
@@ -122,12 +124,12 @@ export default class App extends Component {
     fetch(`https://swapi.co/api/vehicles/`)
       .then(data => data.json())
       .then(data => (data.results).map((vehicle)=>{
-        return {
+        return Object.assign({}, {
           Name: vehicle.name,
           Model: vehicle.model,
           Class: vehicle.vehicle_class,
           Passengers: vehicle.passengers
-        }
+        })
         }))
       .then(data => {
         this.setState({

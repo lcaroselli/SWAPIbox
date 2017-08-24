@@ -7,9 +7,9 @@ const Header = ( { openText } ) => {
     return (
       <div className='crawl'>
         <section className='crawl-container'>
-          <p className='crawl-text'>{ text.opening }</p>
-          <p className='movie-title'>{ text.title }</p>
-          <p className='movie-release-date'>{ text.releaseDate }</p>
+          <p className='crawl-text'>{ text.Opening }</p>
+          <p className='movie-title'>{ text.Title }</p>
+          <p className='movie-release-date'>{ text.ReleaseDate }</p>
         </section>
       </div>
     )
