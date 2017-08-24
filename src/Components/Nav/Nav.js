@@ -7,10 +7,10 @@ const Nav = ({ getCategoryData }) => {
   return(
     <div>
       <nav>
-        <button onClick={ () => getCategoryData('people') } >People</button>
-        <button onClick={ () => getCategoryData('planets') } >Planets</button>
-        <button onClick={ () => getCategoryData('vehicles') } >Vehicles</button>
-        <button onClick={ () => getCategoryData('category') } >Favorites</button>
+        <button className='people' onClick={ () => getCategoryData('people') } >People</button>
+        <button className='planets' onClick={ () => getCategoryData('planets') } >Planets</button>
+        <button className='vehicles' onClick={ () => getCategoryData('vehicles') } >Vehicles</button>
+        <button className='favorites' onClick={ () => getCategoryData('category') } >Favorites</button>
       </nav>
     </div>
   )
