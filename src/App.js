@@ -61,7 +61,7 @@ export default class App extends Component {
           Name: person.name,
           Homeworld: person.planet,
           Population: person.population,
-          Species: 'Unknown'
+          // Species: this.fetchSpecies(person.species)
         })
       }))
       .then(data =>
@@ -113,12 +113,29 @@ export default class App extends Component {
     })
       Promise.all(unresolvedResidents)
       .then(resident => {
-        return resident.map((person, index) => {
+        return resident.map((person) => {
           return newResidents.push(person.name + ", ")
         })
       })
       return newResidents
   }
+
+  // fetchSpecies(speciesArray) {
+  //   const newSpecies = []
+  //   const speciesData = speciesArray.map((species) => {
+  //     return fetch(species)
+  //     .then(data => data.json())
+  //   })
+  //
+  //   Promise.all(speciesData)
+  //   .then(species => {
+  //     return species.map((specie) => {
+  //       return newSpecies.push(specie.name)
+  //     })
+  //   })
+  //   return speciesData
+  // }
+
 
   fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
