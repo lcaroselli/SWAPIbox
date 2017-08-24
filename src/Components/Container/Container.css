@@ -1,5 +1,6 @@
 .container {
   background: #272b30;
+  display: flex;
   display: grid;
   grid-template-columns: 200px 200px 200px 200px;
   grid-column-gap: 20px;
