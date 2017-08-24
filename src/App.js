@@ -11,7 +11,7 @@ export default class App extends Component {
     this.state = {
       dataArray: [],
       openingText: [],
-      display: 'Loading Data...',
+      displayPage: 'initial',
       people: null,
       planets: null,
       vehicles: null
@@ -84,8 +84,7 @@ export default class App extends Component {
         Terrain: planet.terrain,
         Population: planet.population,
         Climate: planet.climate,
-        Residents: 'Unknown'
-        // Residents: this.fetchResidents(planet.residents)
+        Residents: this.fetchResidents(planet.residents)
       }
     }))
     .then(newPlanet =>
@@ -95,19 +94,20 @@ export default class App extends Component {
     )
   }
 
-  // fetchResidents(residentsArray) {
-  //   const newResidents = []
-  //   const unresolvedResidents = residentsArray.map((url)=>{
-  //     return fetch(`${url}`)
-  //     .then(data => data.json())
-  //   })
-  //     Promise.all(unresolvedResidents)
-  //     .then(resident => {
-  //       // return resident
-  //       newResidents.push(...resident)
-  //     })
-  //   return newResidents
-  // }
+  fetchResidents(residentsArray) {
+    const newResidents = []
+    const unresolvedResidents = residentsArray.map((url)=>{
+      return fetch(url)
+      .then(data => data.json())
+    })
+      Promise.all(unresolvedResidents)
+      .then(resident => {
+        return resident.map((person, index) => {
+          return newResidents.push(person.name)
+        })
+      })
+      return newResidents
+  }
 
   fetchVehicleData(string) {
     fetch(`https://swapi.co/api/vehicles/`)
@@ -140,25 +140,33 @@ export default class App extends Component {
        }
      })
      .then(response =>  this.setState({
-                          dataArray: response
+                          dataArray: response,
+                          displayPage: 'loaded'
                         }))
-    //  .catch(error => alert('Error' + error))
+     .catch(error => this.setState({
+                          displayPage: 'loading'
+                        }))
   }
 
   render() {
-    const renderCards = () => {
-     if (this.state.dataArray.length > 0) {
-       return <Container categoryData = { this.state.dataArray } />
-     } else {
-       return <h2 className='select-category'>Please Select a Category</h2>
-     }
-   }
-
     return (
       <div>
-        < Header openText =  { this.state.openingText } />
-        < Nav getCategoryData = { this.getCategoryData } />
-        { renderCards() }
+        <div>
+          < Header openText =  { this.state.openingText } />
+          < Nav getCategoryData = { this.getCategoryData } />
+
+          { this.state.displayPage === 'initial' &&
+            <h2 className='select-category'>Please Select a Category</h2>
+          }
+
+          { this.state.displayPage === 'loaded' &&
+            <Container categoryData={ this.state.dataArray } />
+          }
+
+          { this.state.displayPage === 'loading' &&
+            <h2 className='select-category'>Loading your request...</h2>
+          }
+        </div>
       </div>
     );
   }
