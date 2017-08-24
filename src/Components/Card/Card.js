@@ -21,13 +21,22 @@ export default class Card extends Component {
     this.props.setFavoriteState(this)
   };
 
+  componentWillUpdate(nextProps, nextState) {
+  if(nextState.favorite === true) {
+    this.section.style = 'background: #A60000'
+  } else {
+    this.section.style ='background: #f5f5f5'
+
+  }
+}
+
   render() {
     const { subject } = this.props
     let cardKeys = Object.keys(subject)
 
     let cardArray = cardKeys.map((key, i) => {
       return (
-        <div>
+        <div >
           <p className='category-data'> { key }: { subject[key] } </p>
         </div>
       )
@@ -35,8 +44,8 @@ export default class Card extends Component {
 
 
     return(
-      <div>
-        <section className='card'>
+      <div >
+        <section className='card' ref={ element => this.section = element }>
           <button className='favorite-btn' onClick={ this.favoriteCard.bind(this) }><img src={ Star } alt='star icon to favorite a card'/></button>
           { cardArray }
         </section>
