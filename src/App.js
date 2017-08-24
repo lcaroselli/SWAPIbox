@@ -221,7 +221,7 @@ export default class App extends Component {
       <div>
         <div>
           < Header openText =  { this.state.openingText } />
-        < Nav getCategoryData = { this.getCategoryData } getFavorites={this.getFavorites} favCount={this.state.favorite.length}  />
+        < Nav getCategoryData = { this.getCategoryData } getFavorites={ this.getFavorites } favCount={ this.state.favorite.length }  />
 
           { this.state.displayPage === 'initial' &&
             <h2 className='select-category'>Please Select a Category</h2>

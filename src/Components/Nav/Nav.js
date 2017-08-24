@@ -10,8 +10,7 @@ const Nav = ({ getCategoryData, getFavorites, favCount }) => {
         <button onClick={ () => getCategoryData('people') } >People</button>
         <button onClick={ () => getCategoryData('planets') } >Planets</button>
         <button onClick={ () => getCategoryData('vehicles') } >Vehicles</button>
-        <button onClick={ () => getFavorites() } >Favorites</button>
-        <h4>{ favCount }</h4>
+        <button onClick={ () => getFavorites() } >Favorites : { favCount }</button>
       </nav>
     </div>
   )
