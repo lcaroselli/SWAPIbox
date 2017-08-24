@@ -1,7 +1,8 @@
 .header {
   background: #1c1e22;
   color: yellow;
-  height: 300px;
+  height: 200px;
+  perspective: 400px;
   margin: 0;
   overflow: hidden;
   padding: 30px;
@@ -9,9 +10,11 @@
 }
 
 .crawl-text {
-  font-size: 20px;
+  text-align: center;
+  font-size: 40px;
   padding: 10px;
-  line-height: 400%;
+  line-height: 200px;
+  min-width: 300px;
   text-shadow: 5px 5px #000000;
 }
 
@@ -30,12 +33,12 @@
   position: relative;
   top: 99999px;
   transform-origin: 50% 100%;
-  animation: crawl 60s linear;
+  animation: crawl 70s linear;
 }
 
 @keyframes crawl {
     0% {
-      top: -100px;
+      top: 0px;
       transform: rotateX(20deg)  translateZ(0);
   }
     100% {

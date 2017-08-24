@@ -21,9 +21,11 @@ export default class App extends Component {
   }
 
   setFavoriteState(card) {
-    let favState=this.state.favorite;
+    let favState = this.state.favorite;
     favState.push(card)
-    this.setState({ favorite: favState})
+    this.setState({
+      favorite: favState
+    })
   }
 
   componentDidMount() {
@@ -110,7 +112,7 @@ export default class App extends Component {
       Promise.all(unresolvedResidents)
       .then(resident => {
         return resident.map((person, index) => {
-          return newResidents.push(person.name)
+          return newResidents.push(person.name + ", ")
         })
       })
       return newResidents
