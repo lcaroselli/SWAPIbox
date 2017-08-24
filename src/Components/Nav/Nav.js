@@ -2,15 +2,16 @@ import React from 'react';
 import './Nav.css';
 import PropTypes from 'prop-types';
 
-const Nav = ({ getCategoryData }) => {
+const Nav = ({ getCategoryData, getFavorites, favCount }) => {
 
   return(
     <div>
       <nav>
-        <button className='people' onClick={ () => getCategoryData('people') } >People</button>
-        <button className='planets' onClick={ () => getCategoryData('planets') } >Planets</button>
-        <button className='vehicles' onClick={ () => getCategoryData('vehicles') } >Vehicles</button>
-        <button className='favorites' onClick={ () => getCategoryData('category') } >Favorites</button>
+        <button onClick={ () => getCategoryData('people') } >People</button>
+        <button onClick={ () => getCategoryData('planets') } >Planets</button>
+        <button onClick={ () => getCategoryData('vehicles') } >Vehicles</button>
+        <button onClick={ () => getFavorites() } >Favorites</button>
+        <h4>{ favCount }</h4>
       </nav>
     </div>
   )
