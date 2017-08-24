@@ -1,5 +1,6 @@
 import React from 'react';
 import './Nav.css';
+import PropTypes from 'prop-types';
 
 const Nav= ({ getCategoryData }) => {
 
@@ -14,5 +15,9 @@ const Nav= ({ getCategoryData }) => {
     </div>
   )
 }
+
+Nav.propTypes = {
+   getCategoryData: PropTypes.func.isRequired
+ }
 
 export default Nav;

@@ -1,6 +1,7 @@
-import React from 'react'
-import Card from "../Card/Card.js"
+import React from 'react';
+import Card from "../Card/Card.js";
 import './Container.css';
+import PropTypes from 'prop-types';
 
 const Container = ({ categoryData }) => {
 
@@ -22,5 +23,9 @@ const Container = ({ categoryData }) => {
     </div>
   )
 }
+
+Container.propTypes = {
+   categoryData: PropTypes.array.isRequired
+ }
 
 export default Container

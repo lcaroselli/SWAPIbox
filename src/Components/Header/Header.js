@@ -1,5 +1,6 @@
-import React from 'react'
+import React from 'react';
 import './Header.css';
+import PropTypes from 'prop-types';
 
 const Header = ( { openText } ) => {
   const scrollText = openText.map((text) => {
@@ -19,5 +20,9 @@ const Header = ( { openText } ) => {
     </div>
   )
 }
+
+Header.propTypes = {
+   openText: PropTypes.array.isRequired
+ }
 
 export default Header;
