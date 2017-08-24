@@ -27,7 +27,6 @@ export default class App extends Component {
   }
 
   fetchMovieOpening() {
-    const movieOpeningArray =
     fetch(`https://swapi.co/api/films/`)
     .then(data => data.json())
     .then(data => (data.results).map((film)=>{
@@ -151,7 +150,7 @@ export default class App extends Component {
      if (this.state.dataArray.length > 0) {
        return <Container categoryData = { this.state.dataArray } />
      } else {
-       return <h2>'Please Select a Category'</h2>
+       return <h2 className='select-category'>Please Select a Category</h2>
      }
    }
 

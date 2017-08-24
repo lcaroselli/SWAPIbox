@@ -1,6 +1,6 @@
-/*APP COMPONENT RELATED CSS GOES HERE*/
-body {
-  font-family: 'Helvetica';
-  background: #32383e;
-  height: 100%;
+.select-category {
+  color: #ffffff;
+  font-size: 35px;
+  margin-top: 40px;
+  text-align: center;
 }
