@@ -18,11 +18,13 @@ export default class App extends Component {
       favorite: []
     }
     this.getCategoryData = this.getCategoryData.bind(this)
+    this.getFavorites = this.getFavorites.bind(this)
   }
 
   setFavoriteState(card) {
     let favState=this.state.favorite;
-    favState.push(card)
+    console.log('card: ', card.props.subject)
+    favState.push(card.props.subject)
     this.setState({ favorite: favState})
   }
 
@@ -110,7 +112,7 @@ export default class App extends Component {
       Promise.all(unresolvedResidents)
       .then(resident => {
         return resident.map((person, index) => {
-          return newResidents.push(person.name)
+          return newResidents.push(person.name+", ")
         })
       })
       return newResidents
@@ -133,6 +135,18 @@ export default class App extends Component {
         })
       })
   }
+
+  getFavorites() {
+
+    this.setState({
+       dataArray: this.state.favorite,
+       displayPage: 'loaded'
+     })
+
+    console.log(this.state.favorite)
+  }
+
+
 
   getCategoryData(category) {
     fetch(`https://swapi.co/api/${category}/`)
@@ -161,7 +175,7 @@ export default class App extends Component {
       <div>
         <div>
           < Header openText =  { this.state.openingText } />
-          < Nav getCategoryData = { this.getCategoryData } />
+        < Nav getCategoryData = { this.getCategoryData } getFavorites={this.getFavorites}  />
 
           { this.state.displayPage === 'initial' &&
             <h2 className='select-category'>Please Select a Category</h2>
