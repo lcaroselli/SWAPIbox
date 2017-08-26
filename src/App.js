@@ -32,6 +32,22 @@ export default class App extends Component {
     }
   }
 
+  addFavoriteObj(card) {
+    let cardName = card.props.subject.Name;
+    console.log(cardName)
+    let peopleArray = this.state.people;
+    let matchedIndex = -1
+    let matchedCard = peopleArray.filter((obj)=>{
+      if (obj.Name === cardName) {
+        obj.Fav = true
+        matchedIndex = peopleArray.indexOf(obj)
+        peopleArray.splice(matchedIndex, 1, obj)
+        return obj;
+      }
+    })
+  //  NOTE I'm not ever setting state but it is being set...but why???
+  }
+
   removeFavoriteState(cardInfo) {
     let favState = [...this.state.favorite];
     let newFavState = favState.filter(obj => obj !== cardInfo)
@@ -213,7 +229,7 @@ export default class App extends Component {
           }
 
           { this.state.displayPage === 'loaded' &&
-            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } />
+            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } addFavoriteObj={ this.addFavoriteObj.bind(this) } />
           }
 
           { this.state.displayPage === 'loading' &&

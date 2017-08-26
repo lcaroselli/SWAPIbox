@@ -14,7 +14,7 @@ export default class Card extends Component {
 
   favoriteCard(e) {
     if (this.state.favorite === false) {
-
+      this.props.addFavoriteObj(this)
       this.setState({ favorite: true } )
     } else {
       this.setState({ favorite: false } )
