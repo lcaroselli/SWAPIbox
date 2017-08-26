@@ -62,6 +62,17 @@ export default class App extends Component {
     })
   }
 
+  clickedCardCSS(card) {
+    if (this.state.favorite === false) {
+
+      this.setState({ favorite: true } )
+    } else {
+      this.setState({ favorite: false } )
+
+    }
+    this.props.setFavoriteState(this)
+  };
+
   fetchPeopleData(string) {
     fetch(`https://swapi.co/api/people/`)
       .then(data => data.json())
@@ -71,7 +82,8 @@ export default class App extends Component {
           Name: person.name,
           Homeworld: person.planet,
           Population: person.population,
-          Species: this.fetchSpecies(person.species)
+          Species: this.fetchSpecies(person.species),
+          Fav: false
         })
       }))
       .then(data =>
@@ -105,7 +117,8 @@ export default class App extends Component {
         Terrain: planet.terrain,
         Population: planet.population,
         Climate: planet.climate,
-        Residents: this.fetchResidents(planet.residents)
+        Residents: this.fetchResidents(planet.residents),
+        Fav: false
       })
     }))
     .then(data =>
@@ -154,7 +167,8 @@ export default class App extends Component {
           Name: vehicle.name,
           Model: vehicle.model,
           Class: vehicle.vehicle_class,
-          Passengers: vehicle.passengers
+          Passengers: vehicle.passengers,
+          Fav: false
         })
         }))
       .then(data => {
@@ -175,13 +189,7 @@ export default class App extends Component {
     fetch(`https://swapi.co/api/${category}/`)
      .then(response => response.json())
      .then(response => {
-       if (category === 'people') {
-         return this.state.people
-       } else if (category === 'planets') {
-         return this.state.planets
-       } else if (category === 'vehicles'){
-         return this.state.vehicles
-       }
+         return this.state[category]
      })
      .then(response =>  this.setState({
                           dataArray: response,
