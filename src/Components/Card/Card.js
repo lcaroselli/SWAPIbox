@@ -6,42 +6,31 @@ import PropTypes from 'prop-types';
 export default class Card extends Component {
   constructor() {
     super();
-      this.favoriteCard = this.favoriteCard.bind(this)
+    this.favoriteCard = this.favoriteCard.bind(this)
       this.state = {
-        favorite: false,
+        favoriteClicked: false,
       }
   }
 
   favoriteCard(e) {
-    if (this.state.favorite === false) {
+    if (this.state.favoriteClicked === false) {
       this.props.addFavoriteObj(this)
-      this.setState({ favorite: true } )
+      this.setState({ favoriteClicked: true } )
     } else {
-      this.setState({ favorite: false } )
+      this.setState({ favoriteClicked: false } )
       this.props.removeFavoriteObj(this)
     }
     this.props.setFavoriteState(this)
   };
 
-
-
-//   componentWillUpdate(nextProps, nextState) {
-//   if(nextState.favorite === true) {
-//     this.section.style = 'background: #A60000'
-//   } else {
-//     this.section.style ='background: #f5f5f5'
-//
-//   }
-// }
-
   render() {
-    const { subject } = this.props
+    const { subject, favorite } = this.props
     let cardKeys = Object.keys(subject)
     cardKeys.splice(4, 2)
 
     let cardArray = cardKeys.map((key, i) => {
       return (
-        <div >
+        <div>
           <p className='category-data'> { key }: { subject[key] } </p>
         </div>
       )
@@ -50,7 +39,7 @@ export default class Card extends Component {
 
     return(
       <div >
-        <section className='card' ref={ element => this.section = element }>
+        <section className={ this.state.favoriteClicked === true ? "card clicked-card" : "card" }>
           <button className='favorite-btn' onClick={ this.favoriteCard.bind(this) }><img src={ Star } alt='star icon to favorite a card'/></button>
           { cardArray }
         </section>

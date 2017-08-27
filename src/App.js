@@ -34,7 +34,6 @@ export default class App extends Component {
 
   addFavoriteObj(card) {
     let cardName = card.props.subject.Name;
-    console.log(card)
     let cardCategory = card.props.subject.Category
     let categoryArray = Array.from(this.state[cardCategory]);
     let matchedIndex = -1
@@ -255,7 +254,7 @@ export default class App extends Component {
           }
 
           { this.state.displayPage === 'loaded' &&
-            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } addFavoriteObj={ this.addFavoriteObj.bind(this) } removeFavoriteObj={ this.removeFavoriteObj.bind(this)}/>
+            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } addFavoriteObj={ this.addFavoriteObj.bind(this) } removeFavoriteObj={ this.removeFavoriteObj.bind(this) } />
           }
 
           { this.state.displayPage === 'loading' &&
