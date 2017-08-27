@@ -36,7 +36,7 @@ export default class App extends Component {
     let cardName = card.props.subject.Name;
     console.log(card)
     let cardCategory = card.props.subject.Category
-    let categoryArray = this.state[cardCategory];
+    let categoryArray = Array.from(this.state[cardCategory]);
     let matchedIndex = -1
     let matchedCard = categoryArray.filter((obj)=>{
       if (obj.Name === cardName) {
@@ -46,21 +46,28 @@ export default class App extends Component {
         return obj;
       }
     })
+    this.setState({
+      [cardCategory]: categoryArray
+    })
   }
   //  NOTE I'm not ever setting state but it is being set...but why???
 
   removeFavoriteObj(card) {
     let cardName = card.props.subject.Name;
-    console.log(cardName)
-    let peopleArray = this.state.people;
+    console.log(card)
+    let cardCategory = card.props.subject.Category
+    let categoryArray = Array.from(this.state[cardCategory]);
     let matchedIndex = -1
-    let matchedCard = peopleArray.filter((obj)=>{
+    let matchedCard = categoryArray.filter((obj)=>{
       if (obj.Name === cardName) {
-        matchedIndex = peopleArray.indexOf(obj)
+        matchedIndex = categoryArray.indexOf(obj)
         obj.Fav = false
-        peopleArray.splice(matchedIndex, 1, obj)
+        categoryArray.splice(matchedIndex, 1, obj)
         return obj;
       }
+    })
+    this.setState({
+      [cardCategory]: categoryArray
     })
   }
 
