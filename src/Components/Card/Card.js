@@ -14,25 +14,30 @@ export default class Card extends Component {
 
   favoriteCard(e) {
     if (this.state.favorite === false) {
+      this.props.addFavoriteObj(this)
       this.setState({ favorite: true } )
     } else {
       this.setState({ favorite: false } )
+      this.props.removeFavoriteObj(this)
     }
     this.props.setFavoriteState(this)
   };
 
-  componentWillUpdate(nextProps, nextState) {
-  if(nextState.favorite === true) {
-    this.section.style = 'background: #A60000'
-  } else {
-    this.section.style ='background: #f5f5f5'
 
-  }
-}
+
+//   componentWillUpdate(nextProps, nextState) {
+//   if(nextState.favorite === true) {
+//     this.section.style = 'background: #A60000'
+//   } else {
+//     this.section.style ='background: #f5f5f5'
+//
+//   }
+// }
 
   render() {
     const { subject } = this.props
     let cardKeys = Object.keys(subject)
+    cardKeys.splice(4, 2)
 
     let cardArray = cardKeys.map((key, i) => {
       return (

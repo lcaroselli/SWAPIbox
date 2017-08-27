@@ -15,7 +15,7 @@ export default class App extends Component {
       people: null,
       planets: null,
       vehicles: null,
-      favorite: []
+      favorite: [],
     }
     this.getCategoryData = this.getCategoryData.bind(this)
     this.getFavorites = this.getFavorites.bind(this)
@@ -30,6 +30,45 @@ export default class App extends Component {
       favState.push(card.props.subject)
       this.setState({ favorite: favState})
     }
+  }
+
+  addFavoriteObj(card) {
+    let cardName = card.props.subject.Name;
+    console.log(card)
+    let cardCategory = card.props.subject.Category
+    let categoryArray = Array.from(this.state[cardCategory]);
+    let matchedIndex = -1
+    let matchedCard = categoryArray.filter((obj)=>{
+      if (obj.Name === cardName) {
+        matchedIndex = categoryArray.indexOf(obj)
+        obj.Fav = true
+        categoryArray.splice(matchedIndex, 1, obj)
+        return obj;
+      }
+    })
+    this.setState({
+      [cardCategory]: categoryArray
+    })
+  }
+  //  NOTE I'm not ever setting state but it is being set...but why???
+
+  removeFavoriteObj(card) {
+    let cardName = card.props.subject.Name;
+    console.log(card)
+    let cardCategory = card.props.subject.Category
+    let categoryArray = Array.from(this.state[cardCategory]);
+    let matchedIndex = -1
+    let matchedCard = categoryArray.filter((obj)=>{
+      if (obj.Name === cardName) {
+        matchedIndex = categoryArray.indexOf(obj)
+        obj.Fav = false
+        categoryArray.splice(matchedIndex, 1, obj)
+        return obj;
+      }
+    })
+    this.setState({
+      [cardCategory]: categoryArray
+    })
   }
 
   removeFavoriteState(cardInfo) {
@@ -62,6 +101,17 @@ export default class App extends Component {
     })
   }
 
+  clickedCardCSS(card) {
+    if (this.state.favorite === false) {
+
+      this.setState({ favorite: true } )
+    } else {
+      this.setState({ favorite: false } )
+
+    }
+    this.props.setFavoriteState(this)
+  };
+
   fetchPeopleData(string) {
     fetch(`https://swapi.co/api/people/`)
       .then(data => data.json())
@@ -71,7 +121,9 @@ export default class App extends Component {
           Name: person.name,
           Homeworld: person.planet,
           Population: person.population,
-          Species: this.fetchSpecies(person.species)
+          Species: this.fetchSpecies(person.species),
+          Fav: false,
+          Category: 'people'
         })
       }))
       .then(data =>
@@ -105,7 +157,9 @@ export default class App extends Component {
         Terrain: planet.terrain,
         Population: planet.population,
         Climate: planet.climate,
-        Residents: this.fetchResidents(planet.residents)
+        Residents: this.fetchResidents(planet.residents),
+        Fav: false,
+        Category: 'planets'
       })
     }))
     .then(data =>
@@ -154,7 +208,9 @@ export default class App extends Component {
           Name: vehicle.name,
           Model: vehicle.model,
           Class: vehicle.vehicle_class,
-          Passengers: vehicle.passengers
+          Passengers: vehicle.passengers,
+          Fav: false,
+          Category: 'vehicles'
         })
         }))
       .then(data => {
@@ -175,13 +231,7 @@ export default class App extends Component {
     fetch(`https://swapi.co/api/${category}/`)
      .then(response => response.json())
      .then(response => {
-       if (category === 'people') {
-         return this.state.people
-       } else if (category === 'planets') {
-         return this.state.planets
-       } else if (category === 'vehicles'){
-         return this.state.vehicles
-       }
+         return this.state[category]
      })
      .then(response =>  this.setState({
                           dataArray: response,
@@ -205,7 +255,7 @@ export default class App extends Component {
           }
 
           { this.state.displayPage === 'loaded' &&
-            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } />
+            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } addFavoriteObj={ this.addFavoriteObj.bind(this) } removeFavoriteObj={ this.removeFavoriteObj.bind(this)}/>
           }
 
           { this.state.displayPage === 'loading' &&

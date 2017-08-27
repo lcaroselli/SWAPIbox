@@ -3,7 +3,7 @@ import Card from "../Card/Card.js";
 import './Container.css';
 import PropTypes from 'prop-types';
 
-const Container = ({ categoryData, setFavoriteState }) => {
+const Container = ({ categoryData, setFavoriteState, addFavoriteObj, removeFavoriteObj }) => {
 
   const newCards = () => {
     if (categoryData.length > 0) {
@@ -11,6 +11,8 @@ const Container = ({ categoryData, setFavoriteState }) => {
         return <Card
                 subject={ object }
                 setFavoriteState={ setFavoriteState }
+                addFavoriteObj={ addFavoriteObj }
+                removeFavoriteObj={ removeFavoriteObj }
                 />
       })
     }
