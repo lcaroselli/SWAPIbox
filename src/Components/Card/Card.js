@@ -24,7 +24,7 @@ export default class Card extends Component {
   };
 
   render() {
-    const { subject, favorite } = this.props
+    const { subject } = this.props
     let cardKeys = Object.keys(subject)
     cardKeys.splice(4, 2)
 
