@@ -15,7 +15,7 @@ export default class App extends Component {
       people: null,
       planets: null,
       vehicles: null,
-      favorite: []
+      favorite: [],
     }
     this.getCategoryData = this.getCategoryData.bind(this)
     this.getFavorites = this.getFavorites.bind(this)
@@ -34,18 +34,34 @@ export default class App extends Component {
 
   addFavoriteObj(card) {
     let cardName = card.props.subject.Name;
+    console.log(card)
+    let cardCategory = card.props.subject.Category
+    let categoryArray = this.state[cardCategory];
+    let matchedIndex = -1
+    let matchedCard = categoryArray.filter((obj)=>{
+      if (obj.Name === cardName) {
+        matchedIndex = categoryArray.indexOf(obj)
+        obj.Fav = true
+        categoryArray.splice(matchedIndex, 1, obj)
+        return obj;
+      }
+    })
+  }
+  //  NOTE I'm not ever setting state but it is being set...but why???
+
+  removeFavoriteObj(card) {
+    let cardName = card.props.subject.Name;
     console.log(cardName)
     let peopleArray = this.state.people;
     let matchedIndex = -1
     let matchedCard = peopleArray.filter((obj)=>{
       if (obj.Name === cardName) {
-        obj.Fav = true
         matchedIndex = peopleArray.indexOf(obj)
+        obj.Fav = false
         peopleArray.splice(matchedIndex, 1, obj)
         return obj;
       }
     })
-  //  NOTE I'm not ever setting state but it is being set...but why???
   }
 
   removeFavoriteState(cardInfo) {
@@ -99,7 +115,8 @@ export default class App extends Component {
           Homeworld: person.planet,
           Population: person.population,
           Species: this.fetchSpecies(person.species),
-          Fav: false
+          Fav: false,
+          Category: 'people'
         })
       }))
       .then(data =>
@@ -134,7 +151,8 @@ export default class App extends Component {
         Population: planet.population,
         Climate: planet.climate,
         Residents: this.fetchResidents(planet.residents),
-        Fav: false
+        Fav: false,
+        Category: 'planets'
       })
     }))
     .then(data =>
@@ -184,7 +202,8 @@ export default class App extends Component {
           Model: vehicle.model,
           Class: vehicle.vehicle_class,
           Passengers: vehicle.passengers,
-          Fav: false
+          Fav: false,
+          Category: 'vehicles'
         })
         }))
       .then(data => {
@@ -229,7 +248,7 @@ export default class App extends Component {
           }
 
           { this.state.displayPage === 'loaded' &&
-            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } addFavoriteObj={ this.addFavoriteObj.bind(this) } />
+            <Container categoryData={ this.state.dataArray } setFavoriteState={ this.setFavoriteState.bind(this) } addFavoriteObj={ this.addFavoriteObj.bind(this) } removeFavoriteObj={ this.removeFavoriteObj.bind(this)}/>
           }
 
           { this.state.displayPage === 'loading' &&

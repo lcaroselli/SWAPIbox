@@ -18,7 +18,7 @@ export default class Card extends Component {
       this.setState({ favorite: true } )
     } else {
       this.setState({ favorite: false } )
-
+      this.props.removeFavoriteObj(this)
     }
     this.props.setFavoriteState(this)
   };
@@ -37,7 +37,7 @@ export default class Card extends Component {
   render() {
     const { subject } = this.props
     let cardKeys = Object.keys(subject)
-    cardKeys.pop()
+    cardKeys.splice(4, 2)
 
     let cardArray = cardKeys.map((key, i) => {
       return (
