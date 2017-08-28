@@ -33,23 +33,27 @@ export default class App extends Component {
   }
 
   addFavoriteObj(card) {
-    let cardName = card.props.subject.Name;
-    let cardCategory = card.props.subject.Category
-    let categoryArray = Array.from(this.state[cardCategory]);
-    let matchedIndex = -1
-    let matchedCard = categoryArray.filter((obj)=>{
-      if (obj.Name === cardName) {
-        matchedIndex = categoryArray.indexOf(obj)
-        obj.Fav = true
-        categoryArray.splice(matchedIndex, 1, obj)
-        return obj;
+      let cardName = card.props.subject.Name;
+      let cardCategory = card.props.subject.Category
+      let categoryArray = Array.from(this.state[cardCategory]);
+      let matchedIndex = -1
+      let matchedArray = categoryArray.filter((obj)=>{
+        if (obj.Name === cardName) {
+          matchedIndex = categoryArray.indexOf(obj)
+          return obj;
+        }
+      })
+      let matchedCard = matchedArray[0]
+      if (matchedCard.Fav === false) {
+        matchedCard.Fav = true
+      } else {
+        matchedCard.Fav = false
       }
-    })
-    this.setState({
-      [cardCategory]: categoryArray
-    })
-  }
-  //  NOTE I'm not ever setting state but it is being set...but why???
+      categoryArray.splice(matchedIndex, 1, matchedCard)
+      this.setState({
+        [cardCategory]: categoryArray
+      })
+    }
 
   removeFavoriteObj(card) {
     let cardName = card.props.subject.Name;
